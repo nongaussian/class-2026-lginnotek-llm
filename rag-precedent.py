@@ -12,7 +12,7 @@ from langchain_core.output_parsers import StrOutputParser
 # ==========================================
 # 1. 환경 설정
 # ==========================================
-PROJECT_ID = "project-2a5393c8-4c80-45af-ae9"       # 프로젝트 ID 입력 (Console 대시보드에서 확인)
+PROJECT_ID = "project-id"            # 프로젝트 ID 입력 (Console 대시보드에서 확인)
 LOCATION = "us-central1"             # 리전 (서울은 asia-northeast3)
 INDEX_ID = "your-index-id"           # Vertex AI Vector Search Index ID
 ENDPOINT_ID = "your-endpoint-id"     # Vertex AI Vector Search Endpoint ID
