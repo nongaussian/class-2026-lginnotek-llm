@@ -6,7 +6,7 @@ from langchain_core.output_parsers import StrOutputParser
 import os
 
 # API 키 설정
-os.environ["GOOGLE_API_KEY"] = "AIzaSyBNUhCrEfJjNIIfy4gE78N_GwuMr9JTUcM"
+os.environ["GOOGLE_API_KEY"] = "AIzaSyDWeeAT3iJ1nUAk3UrX1LVeIMlVv2gpBV4"
 
 # 1. 저장된 인덱스 불러오기
 # rag-build-index.py와 동일한 임베딩 모델 사용
@@ -40,6 +40,7 @@ prompt = ChatPromptTemplate.from_template("""
 
 # 5. 문서 포맷팅 함수
 def format_docs(docs):
+    print(docs)
     return "\n\n".join(doc.page_content for doc in docs)
 
 # 6. LCEL 체인 구성
