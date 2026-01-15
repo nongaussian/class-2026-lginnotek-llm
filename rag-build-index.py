@@ -1,4 +1,4 @@
-# !pip install langchain langchain-community langchain-google-vertexai faiss-cpu
+# !pip install langchain langchain-community langchain-google-vertexai faiss-cpu requests
 
 from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
@@ -6,13 +6,49 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings
 import os
 import json
 import glob
+import requests
 
 # API 키 설정
-os.environ["GOOGLE_API_KEY"] = "AIzaSyDWeeAT3iJ1nUAk3UrX1LVeIMlVv2gpBV4"
+os.environ["GOOGLE_API_KEY"] = "your-api-key"
 
-# precedent_sample 디렉토리에서 JSON 파일들 로드
-json_files = glob.glob("precedent_sample/*.json")
-print(f"📂 {len(json_files)}개의 JSON 파일을 발견했습니다.")
+# GitHub에서 precedent_sample 디렉토리의 JSON 파일들 다운로드
+GITHUB_API_URL = "https://api.github.com/repos/nongaussian/class-2026-lginnotek-llm/contents/precedent_sample"
+RAW_BASE_URL = "https://raw.githubusercontent.com/nongaussian/class-2026-lginnotek-llm/main/precedent_sample"
+LOCAL_DIR = "precedent_sample"
+
+# 로컬 디렉토리 생성 (없으면)
+os.makedirs(LOCAL_DIR, exist_ok=True)
+print(f"📁 '{LOCAL_DIR}' 디렉토리 준비 완료")
+
+# GitHub API로 파일 목록 가져오기
+print("🔍 GitHub에서 파일 목록을 가져오는 중...")
+response = requests.get(GITHUB_API_URL)
+if response.status_code != 200:
+    raise Exception(f"GitHub API 요청 실패: {response.status_code}")
+
+files = response.json()
+json_files_info = [f for f in files if f["name"].endswith(".json")]
+print(f"📂 GitHub에서 {len(json_files_info)}개의 JSON 파일을 발견했습니다.")
+
+# 각 JSON 파일 다운로드
+for file_info in json_files_info:
+    file_name = file_info["name"]
+    local_path = os.path.join(LOCAL_DIR, file_name)
+
+    # 파일 다운로드
+    raw_url = f"{RAW_BASE_URL}/{file_name}"
+    file_response = requests.get(raw_url)
+
+    if file_response.status_code == 200:
+        with open(local_path, "w", encoding="utf-8") as f:
+            f.write(file_response.text)
+        print(f"  ✓ {file_name} 다운로드 완료")
+    else:
+        print(f"  ✗ {file_name} 다운로드 실패: {file_response.status_code}")
+
+# 로컬 디렉토리에서 JSON 파일들 로드
+json_files = glob.glob(f"{LOCAL_DIR}/*.json")
+print(f"\n📂 {len(json_files)}개의 JSON 파일을 로드합니다.")
 
 docs = []
 for file_path in json_files:
