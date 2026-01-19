@@ -89,7 +89,6 @@ for file_path in json_files:
 print(f"📄 {len(docs)}개의 문서를 생성했습니다.")
 
 # 2. 임베딩 모델 설정 (Google Generative AI)
-# text-embedding-004는 Google의 최신 임베딩 모델입니다.
 embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 
 print("⏳ 문서 벡터화 진행 중...")

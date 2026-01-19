@@ -21,7 +21,7 @@ llm = ChatGoogleGenerativeAI(
 )
 
 embeddings = GoogleGenerativeAIEmbeddings(
-    model="models/embedding-001"
+    model="models/gemini-embedding-001"
 )
 
 # ==========================================
@@ -80,7 +80,6 @@ retriever = vectorstore.as_retriever(
 # 프롬프트 템플릿: 검색된 정보(Context)를 기반으로만 답하도록 지시
 template = """당신은 회사의 인사 규정을 안내하는 친절한 AI 봇입니다.
 아래의 [참고 문서] 내용을 바탕으로 질문에 답하세요.
-문서에 없는 내용은 "죄송합니다, 해당 내용은 규정에 나와있지 않습니다."라고 답하세요.
 
 [참고 문서]
 {context}
