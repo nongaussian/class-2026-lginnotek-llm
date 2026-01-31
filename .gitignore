@@ -3,3 +3,10 @@ my_company_index/index.pkl
 /my_company_index
 /.claude
 /.claude
+kor.txt
+imgcap.npz
+kor-eng-envocab.json
+imgcap_output_vocab.json
+kor-eng-krvocab.json
+kor-eng.npz
+*.log
